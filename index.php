@@ -1,10 +1,20 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-?>
 
-<?php
 include "koneksi.php";
+
+// ✅ Tambahan debug: cek koneksi
+if (!$koneksi) {
+    die("❌ Koneksi gagal: " . mysqli_connect_error());
+}
+
+// ✅ Tambahan debug: cek apakah tabel 'siswa' ada
+$cekTabel = mysqli_query($koneksi, "SHOW TABLES LIKE 'siswa'");
+if (mysqli_num_rows($cekTabel) == 0) {
+    die("❌ ERROR: Tabel 'siswa' tidak ditemukan di database. 
+    <br>➡ Cek nama tabel di phpMyAdmin, mungkin namanya beda (huruf besar/kecil).");
+}
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -105,11 +115,16 @@ include "koneksi.php";
                 <th>Aksi</th>
             </tr>
             <?php
+            // ✅ Tambahan pengecekan error query
             $sql = mysqli_query($koneksi, "SELECT * FROM siswa");
-            if(mysqli_num_rows($sql) == 0){
+            if (!$sql) {
+                die("❌ Query error: " . mysqli_error($koneksi));
+            }
+
+            if (mysqli_num_rows($sql) == 0) {
                 echo "<tr><td colspan='5' align='center'>✨ Data siswa belum ada ✨</td></tr>";
             } else {
-                while($row = mysqli_fetch_assoc($sql)){
+                while ($row = mysqli_fetch_assoc($sql)) {
                     echo "<tr>
                         <td>{$row['id_siswa']}</td>
                         <td>{$row['nama_siswa']}</td>
@@ -127,7 +142,6 @@ include "koneksi.php";
     </div>
 
     <script>
-        // Fitur Pencarian
         document.getElementById('searchInput').addEventListener('keyup', function () {
             let filter = this.value.toLowerCase();
             let rows = document.querySelectorAll('#dataTable tr');
@@ -137,7 +151,6 @@ include "koneksi.php";
             }
         });
 
-        // Konfirmasi hapus lebih rapi
         document.querySelectorAll('.btn-hapus').forEach(btn => {
             btn.addEventListener('click', function (e) {
                 if (!confirm("⚠️ Apakah kamu yakin ingin menghapus data ini?")) {
@@ -146,7 +159,6 @@ include "koneksi.php";
             });
         });
 
-        // Highlight baris saat diklik
         document.querySelectorAll('#dataTable tr').forEach(row => {
             row.addEventListener('click', function () {
                 this.style.backgroundColor = '#d1ecf1';
