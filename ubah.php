@@ -20,9 +20,9 @@ if (!$data) {
 }
 
 if (isset($_POST['update'])) {
-    $nama   = mysqli_real_escape_string($koneksi, $_POST['nama_siswa']);
-    $kelas  = mysqli_real_escape_string($koneksi, $_POST['kelas']);
-    $alamat = mysqli_real_escape_string($koneksi, $_POST['alamat']);
+    $nama   = $_POST['nama_siswa'];
+    $kelas  = $_POST['kelas'];
+    $alamat = $_POST['alamat'];
 
     $stmt = $koneksi->prepare("UPDATE siswa SET nama_siswa=?, kelas=?, alamat=? WHERE id_siswa=?");
     $stmt->bind_param("sssi", $nama, $kelas, $alamat, $id);
@@ -32,6 +32,7 @@ if (isset($_POST['update'])) {
     header("Location: index.php");
     exit;
 }
+
 ?>
 <!DOCTYPE html>
 <html>
