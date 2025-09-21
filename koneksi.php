@@ -1,6 +1,6 @@
 <?php
 $host = "localhost";
-$user = "xirpl1-11_1";
+$user = "xirpl1-11";
 $pass = "0098375178";
 $db   = "db_xirpl1-11_1"; // harus sama dengan yang ada di phpMyAdmin
 
