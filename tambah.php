@@ -11,13 +11,15 @@ if (isset($_POST['simpan'])) {
     $stmt->execute();
     $stmt->close();
 
-    header("Location: index.php");
+    // Kirim pesan sukses via query string
+    header("Location: index.php?success=1");
     exit;
 }
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
+    <meta charset="UTF-8">
     <title>Tambah Siswa</title>
     <style>
         body {
@@ -48,6 +50,7 @@ if (isset($_POST['simpan'])) {
             margin: 8px 0;
             border-radius: 6px;
             border: 1px solid #ddd;
+            font-size: 14px;
         }
         input[type="submit"] {
             background: #28a745;
@@ -57,10 +60,11 @@ if (isset($_POST['simpan'])) {
             border-radius: 6px;
             cursor: pointer;
             width: 100%;
-            transition: 0.3s;
+            transition: transform 0.2s, background 0.3s;
         }
         input[type="submit"]:hover {
             background: #218838;
+            transform: scale(1.05);
         }
         a {
             display: block;
@@ -71,6 +75,12 @@ if (isset($_POST['simpan'])) {
         a:hover {
             text-decoration: underline;
         }
+        .error {
+            color: red;
+            font-size: 14px;
+            display: none;
+            margin-bottom: 8px;
+        }
         @keyframes fadeIn {
             from {opacity: 0; transform: translateY(-10px);}
             to {opacity: 1; transform: translateY(0);}
@@ -80,7 +90,8 @@ if (isset($_POST['simpan'])) {
 <body>
     <div class="form-container">
         <h2>➕ Tambah Siswa</h2>
-        <form method="POST">
+        <form id="formSiswa" method="POST">
+            <div class="error" id="errorMsg">⚠️ Semua field wajib diisi!</div>
             <input type="text" name="nama_siswa" placeholder="Nama Siswa" required>
             <input type="text" name="kelas" placeholder="Kelas" required>
             <textarea name="alamat" placeholder="Alamat" required></textarea>
@@ -88,5 +99,22 @@ if (isset($_POST['simpan'])) {
         </form>
         <a href="index.php">← Kembali</a>
     </div>
+
+    <script>
+        // Validasi sebelum submit
+        const form = document.getElementById("formSiswa");
+        const errorMsg = document.getElementById("errorMsg");
+
+        form.addEventListener("submit", function(event) {
+            const nama = form.nama_siswa.value.trim();
+            const kelas = form.kelas.value.trim();
+            const alamat = form.alamat.value.trim();
+
+            if (!nama || !kelas || !alamat) {
+                errorMsg.style.display = "block";
+                event.preventDefault();
+            }
+        });
+    </script>
 </body>
 </html>
