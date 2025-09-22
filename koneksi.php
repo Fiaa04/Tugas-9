@@ -1,8 +1,8 @@
 <?php
-$host = "localhost";
-$user = "root";      // default user XAMPP
-$pass = "";          // default XAMPP tanpa password
-$db   = "db_xirpl1-11_1";
+$host = "localhost";               // biasanya tetap localhost
+$user = "xirpl1_user";             // user database hosting
+$pass = "user_password";           // password user hosting
+$db   = "xirpl1_db_xirpl1-11_1";  // database hosting lengkap
 
 $koneksi = mysqli_connect($host, $user, $pass, $db);
 
