@@ -1,17 +1,15 @@
 <?php
-// Aktifkan error reporting untuk debugging
+// Aktifkan error reporting
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 $host = "localhost";
-$username = "root";       // Untuk XAMPP/Laragon lokal, biasanya root
-$password = "";           // Password default kosong
-$database = "db_xirpl1-11_1"; // Nama database di lokal
+$username = "xirpl1_user";        // user database hosting
+$password = "user_password";      // password user hosting
+$database = "xirpl1_db_xirpl1-11_1"; // database hosting
 
-// Membuat koneksi
 $conn = mysqli_connect($host, $username, $password, $database);
 
-// Cek koneksi
 if (!$conn) {
     die("Koneksi gagal: " . mysqli_connect_error());
 }
@@ -26,7 +24,5 @@ $sql = "CREATE TABLE IF NOT EXISTS siswa (
 
 if (!mysqli_query($conn, $sql)) {
     echo "Error creating table: " . mysqli_error($conn);
-} else {
-    echo "Tabel siswa siap digunakan!";
 }
 ?>
