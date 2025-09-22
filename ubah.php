@@ -7,7 +7,8 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
 }
 $id = $_GET['id'];
 
-$stmt = $koneksi->prepare("SELECT * FROM siswa WHERE id_siswa = ?");
+// Ambil data siswa berdasarkan id
+$stmt = $koneksi->prepare("SELECT * FROM siswa WHERE id = ?");
 $stmt->bind_param("i", $id);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -19,12 +20,13 @@ if (!$data) {
     exit;
 }
 
+// Proses update
 if (isset($_POST['update'])) {
-    $nama   = $_POST['nama_siswa'];
+    $nama   = $_POST['nama'];
     $kelas  = $_POST['kelas'];
     $alamat = $_POST['alamat'];
 
-    $stmt = $koneksi->prepare("UPDATE siswa SET nama_siswa=?, kelas=?, alamat=? WHERE id_siswa=?");
+    $stmt = $koneksi->prepare("UPDATE siswa SET nama=?, kelas=?, alamat=? WHERE id=?");
     $stmt->bind_param("sssi", $nama, $kelas, $alamat, $id);
     $stmt->execute();
     $stmt->close();
@@ -32,7 +34,6 @@ if (isset($_POST['update'])) {
     header("Location: index.php");
     exit;
 }
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -100,7 +101,7 @@ if (isset($_POST['update'])) {
     <div class="form-container">
         <h2>✏️ Ubah Siswa</h2>
         <form method="POST">
-            <input type="text" name="nama_siswa" value="<?= htmlspecialchars($data['nama_siswa']) ?>" required>
+            <input type="text" name="nama" value="<?= htmlspecialchars($data['nama']) ?>" required>
             <input type="text" name="kelas" value="<?= htmlspecialchars($data['kelas']) ?>" required>
             <textarea name="alamat" required><?= htmlspecialchars($data['alamat']) ?></textarea>
             <input type="submit" name="update" value="Update">

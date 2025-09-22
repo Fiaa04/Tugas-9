@@ -2,9 +2,7 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-?>
 
-<?php
 include "koneksi.php";
 ?>
 <!DOCTYPE html>
@@ -100,25 +98,25 @@ include "koneksi.php";
         <table id="dataTable">
             <tr>
                 <th>ID</th>
-                <th>Nama Siswa</th>
+                <th>Nama</th>
                 <th>Kelas</th>
                 <th>Alamat</th>
                 <th>Aksi</th>
             </tr>
             <?php
             $sql = mysqli_query($koneksi, "SELECT * FROM siswa");
-            if(mysqli_num_rows($sql) == 0){
+            if (mysqli_num_rows($sql) == 0) {
                 echo "<tr><td colspan='5' align='center'>✨ Data siswa belum ada ✨</td></tr>";
             } else {
-                while($row = mysqli_fetch_assoc($sql)){
+                while ($row = mysqli_fetch_assoc($sql)) {
                     echo "<tr>
-                        <td>{$row['id_siswa']}</td>
-                        <td>{$row['nama_siswa']}</td>
+                        <td>{$row['id']}</td>
+                        <td>{$row['nama']}</td>
                         <td>{$row['kelas']}</td>
                         <td>{$row['alamat']}</td>
                         <td class='aksi'>
-                            <a href='ubah.php?id={$row['id_siswa']}' class='ubah'>✏️ Ubah</a> 
-                            <a href='hapus.php?id={$row['id_siswa']}' class='hapus btn-hapus'>🗑 Hapus</a>
+                            <a href='ubah.php?id={$row['id']}' class='ubah'>✏️ Ubah</a> 
+                            <a href='hapus.php?id={$row['id']}' class='hapus btn-hapus'>🗑 Hapus</a>
                         </td>
                     </tr>";
                 }
