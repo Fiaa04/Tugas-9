@@ -4,8 +4,8 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 $host = "localhost";
-$username = "xirpl1_user";        // user database hosting
-$password = "user_password";      // password user hosting
+$username = "xirpl1-11";        // user database hosting
+$password = "0098375178";      // password user hosting
 $database = "xirpl1_db_xirpl1-11_1"; // database hosting
 
 $conn = mysqli_connect($host, $username, $password, $database);
